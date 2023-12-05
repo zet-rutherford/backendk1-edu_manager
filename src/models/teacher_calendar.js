@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Teacher_Calendar.belongsTo(models.User, {
+        foreignKey: "teacherId",
+      });
+      Teacher_Calendar.belongsTo(models.Class, {
+        foreignKey: "classId",
+      });
     }
   }
   Teacher_Calendar.init(

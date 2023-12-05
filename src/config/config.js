@@ -5,6 +5,7 @@ module.exports = {
     database: "edu_manager",
     host: "127.0.0.1",
     dialect: "mysql",
+    logging: false,
   },
   test: {
     username: "root",

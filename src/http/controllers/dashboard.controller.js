@@ -1,5 +1,8 @@
 module.exports = {
   index: (req, res) => {
-    res.render("admin/dashboard/index");
+    return res.render("admin/dashboard/index");
+  },
+  settings: (req, res) => {
+    return res.render("admin/dashboard/settings");
   },
 };

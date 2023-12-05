@@ -10,6 +10,7 @@ var passport = require("passport");
 var session = require("express-session");
 const flash = require("connect-flash");
 var localPassport = require("./passport/localPassport");
+var googlePassport = require("./passport/googlePassport");
 var authMiddleware = require("./http/middlewares/auth.middleware");
 
 const studentRouter = require("./routes/student/index");
@@ -31,15 +32,36 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
+// passport.serializeUser(function (user, done) {
+//   console.log(user.id);
+//   done(null, user.id);
+// });
+
+// passport.deserializeUser(async function (id, done) {
+//   const user = await model.User.findByPk(id);
+
+//   done(null, user.dataValues);
+// });
+
+passport.serializeUser(function ({ user, userSocial }, done) {
+  // console.log(`serializeUser serializeUser`);
+  // console.log(user?.id);
+  // console.log(userSocial.id);
+  // console.log(`serializeUser`);
+  done(null, { id: user?.id, idSocial: userSocial?.id });
 });
 
-passport.deserializeUser(async function (id, done) {
+passport.deserializeUser(async function ({ id, idSocial }, done) {
   const user = await model.User.findByPk(id);
-  done(null, user);
+  const userSocial = await model.User_Social.findByPk(idSocial);
+  // console.log(`deserializeUser`);
+
+  // console.log(user.id);
+  // console.log(userSocial?.id);
+  done(null, { user: user?.dataValues, userSocial: userSocial?.dataValues });
 });
 
+passport.use("google", googlePassport);
 passport.use("local", localPassport);
 
 // view engine setup
@@ -55,7 +77,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/auth", authRouter);
-app.use("/", studentRouter);
+app.use(authMiddleware);
+app.use("/student", studentRouter);
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
 

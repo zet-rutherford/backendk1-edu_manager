@@ -22,7 +22,7 @@ module.exports = new LocalStrategy(
     const hash = user.password;
     bcrypt.compare(password, hash, (err, result) => {
       if (result) {
-        done(null, user);
+        done(null, user.dataValues);
         return;
       }
 

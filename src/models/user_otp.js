@@ -9,13 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User_Otp.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
   }
   User_Otp.init(
     {
       otp: DataTypes.STRING,
       userId: DataTypes.INTEGER,
-      expires: DataTypes.DATE,
+      expiredAt: DataTypes.DATE,
     },
     {
       sequelize,

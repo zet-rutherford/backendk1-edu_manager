@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Type.hasOne(models.User, {
+        foreignKey: "typeId",
+      });
     }
   }
   Type.init(

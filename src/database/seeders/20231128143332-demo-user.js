@@ -9,8 +9,8 @@ module.exports = {
       "Users",
       [
         {
-          name: "Quang Minh",
-          email: "quangminh@root",
+          name: "user1",
+          email: "avadakedavra_a1@outlook.com",
           password: pass,
           phone: "0945958656",
           typeId: 1,

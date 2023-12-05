@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Login_Token.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
   }
   Login_Token.init(
